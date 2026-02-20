@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  scraper-service:
+    build:
+      context: .
+      dockerfile: Dev.Dockerfile
+    container_name: scraper-service
+    ports:
+      - "8081:8081"
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SCRAPFLY_API_KEY: ${SCRAPFLY_API_KEY}
+    networks:
+      - jobscraper-network
+    volumes:
+      - ./src/main/resources/application.yml:/app/src/main/resources/application.yml
+      - ./src:/app/src
+
+networks:
+  jobscraper-network:
+    external: true

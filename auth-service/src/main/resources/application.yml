@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: auth-service
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5434}/${DB_NAME:authdb}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+server:
+  port: ${SERVER_PORT:8083}
+
+jwt:
+  secret: ${JWT_SECRET:empty_for_now}
+  access-token-expiration: 3600000      # 1 hour
+  refresh-token-expiration: 604800000   # 7 days
+
+logging:
+  level:
+    io.feed.authservice: DEBUG

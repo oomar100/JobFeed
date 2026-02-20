@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: Match-Service
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:rankerdb}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
+    consumer:
+      group-id: ranker-service-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+server:
+  port: ${SERVER_PORT:8082}
+
+app:
+  kafka:
+    topics:
+      scrape-completed: scrape.completed
+      rank-completed: rank.completed
+      rank-failed: rank.failed
+  gemini:
+    api-key: API_KEY_REMOVED_FOR_PUBLIC_ACCESS
+    model: gemini-3-flash-preview
+    base-url: https://generativelanguage.googleapis.com/v1beta/models

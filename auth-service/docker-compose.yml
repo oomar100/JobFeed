@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  auth-db:
+    image: postgres:16-alpine
+    container_name: auth-service-db
+    environment:
+      POSTGRES_DB: authdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - auth_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - jobscraper-network
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: Dev.Dockerfile
+    container_name: auth-service
+    ports:
+      - "8083:8083"
+    environment:
+      DB_HOST: auth-db
+      DB_PORT: 5432
+      DB_NAME: authdb
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      JWT_SECRET: ${JWT_SECRET:281fb74e249eb3daf64adc9dcd8a9cda0f4749c8361b4a50a48bdce26c04d083}
+    depends_on:
+      auth-db:
+        condition: service_healthy
+    networks:
+      - jobscraper-network
+    volumes:
+      - ./src/main/resources/application.yml:/app/src/main/resources/application.yml
+      - ./src:/app/src
+
+volumes:
+  auth_postgres_data:
+
+networks:
+  jobscraper-network:
+    external: true

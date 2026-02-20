@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: Dev.Dockerfile
+    container_name: gateway
+    ports:
+      - "8085:8085"
+    environment:
+      AUTH_SERVICE_URL: http://auth-service:8083
+      TASK_SERVICE_URL: http://task-service:8080
+      RANKER_SERVICE_URL: http://ranker-service:8082
+      JWT_SECRET: ${JWT_SECRET:281fb74e249eb3daf64adc9dcd8a9cda0f4749c8361b4a50a48bdce26c04d083}
+    volumes:
+      - ./src/main/resources/application.yml:/app/src/main/resources/application.yml
+      - ./src:/app/src
+    networks:
+      - jobscraper-network
+
+networks:
+  jobscraper-network:
+    external: true

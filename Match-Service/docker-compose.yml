@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  ranker-db:
+    image: postgres:16-alpine
+    container_name: ranker-service-db
+    environment:
+      POSTGRES_DB: rankerdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - ranker_postgres_data:/var/lib/postgresql/data
+    networks:
+      - jobscraper-network
+
+  ranker-service:
+    build:
+      context: .
+      dockerfile: Dev.Dockerfile
+    container_name: ranker-service
+    ports:
+      - "8082:8082"
+    environment:
+      DB_HOST: ranker-db
+      DB_PORT: 5432
+      DB_NAME: rankerdb
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+    volumes:
+      - .:/app
+    depends_on:
+      - ranker-db
+    networks:
+      - jobscraper-network
+
+volumes:
+  ranker_postgres_data:
+
+networks:
+  jobscraper-network:
+    external: true
