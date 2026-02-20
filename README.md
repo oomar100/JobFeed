@@ -6,6 +6,10 @@ Event-driven microservices architecture for automated job scraping and AI-powere
 
 ---
 
+## Demo
+[![Watch the demo](https://img.youtube.com/vi/Y4VrE4khcS4/0.jpg)](https://youtu.be/Y4VrE4khcS4)
+
+---
 ## Services
 
 ### Task Service (Port 8080)
