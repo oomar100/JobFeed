@@ -160,4 +160,3 @@ GEMINI_API_KEY
 - [x] Auth Service
 - [x] API Gateway
 - [x] Frontend
-- [] CI/CD
