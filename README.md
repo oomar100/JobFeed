@@ -3,6 +3,7 @@
 ## Overview
 
 Event-driven microservices architecture for automated job scraping and AI-powered ranking.
+
 <img width="657" height="1359" alt="overview" src="https://github.com/user-attachments/assets/528b47d1-639d-4f00-a249-61090ad4c07a" />
 
 ### Request Flow
