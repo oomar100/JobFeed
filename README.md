@@ -5,6 +5,16 @@
 Event-driven microservices architecture for automated job scraping and AI-powered ranking.
 <img width="657" height="1359" alt="overview" src="https://github.com/user-attachments/assets/528b47d1-639d-4f00-a249-61090ad4c07a" />
 
+### Request Flow
+
+1. User creates task → Gateway validates JWT → Task Service
+2. Task Service saves to DB, publishes scrape.requested
+3. Scraper consumes → scrapes Indeed via Scrapfly
+4. Scraper publishes scrape.completed with jobs
+5. Ranker consumes → scores jobs via Gemini AI → saves to Jobs DB
+6. Ranker publishes rank.completed
+7. Task Service consumes → updates task status to COMPLETED
+8. User fetches ranked jobs → Gateway → Ranker Service
 ---
 
 ## Demo
