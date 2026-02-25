@@ -137,30 +137,6 @@ GET    /api/v1/jobs/count
 5. Task Service updates status to COMPLETED
 6. Frontend fetches ranked jobs from Ranker Service REST API
 ```
-
----
-
-## Environment Variables
-
-### Task Service
-```
-DB_HOST, DB_PORT, DB_NAME, DB_USERNAME, DB_PASSWORD
-KAFKA_BOOTSTRAP_SERVERS
-```
-
-### Scraper Service
-```
-KAFKA_BOOTSTRAP_SERVERS
-SCRAPFLY_API_KEY
-```
-
-### Ranker Service
-```
-DB_HOST, DB_PORT, DB_NAME, DB_USERNAME, DB_PASSWORD
-KAFKA_BOOTSTRAP_SERVERS
-GEMINI_API_KEY
-```
-
 ---
 
 ## Project Checklist
